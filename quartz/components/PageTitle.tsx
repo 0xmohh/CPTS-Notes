@@ -24,12 +24,13 @@ PageTitle.css = `
 }
 
 .page-title-logo {
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  object-fit: contain;
-  border-radius: 6px;
   display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 70px;
+  object-fit: contain;
+  border-radius: 4px;
 }
 `
 
