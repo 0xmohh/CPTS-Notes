@@ -40,4 +40,11 @@ This cheatsheet exists because:
 
 ---
 
+## Reach Me
+
+- 𝕏 — [@r7p7i](https://x.com/r7p7i)
+- LinkedIn — [Mohammed Alrayiqi](https://www.linkedin.com/in/mohammedalrayiqi/)
+
+---
+
 *Last updated: work in progress — check back often.*
