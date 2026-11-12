@@ -1,0 +1,40 @@
+---
+title: Prevention
+---
+
+Knowing how defenders *should* protect upload functionality tells you what weak defenses look like. If any of these are missing, the form is likely exploitable.
+
+## Extension Validation
+
+- **Whitelist + blacklist together** — whitelist is the primary control (what you allow), blacklist is a backstop in case the whitelist is bypassed (`shell.php.jpg`)
+- Whitelist checks that the name *ends with* an allowed extension (anchored regex with `$`)
+- Blacklist checks if a dangerous extension exists *anywhere* in the name (unanchored)
+- Validate on both front-end and back-end — front-end is bypassable but cuts down accidental bad uploads
+
+## Content Validation
+
+- Extension checks alone aren't enough — validate actual file content as well
+- Check both the HTTP `Content-Type` header *and* the real file signature/MIME type (`mime_content_type()`, `file` command), and make sure they agree
+- Reject files where the extension, Content-Type, and magic bytes don't match
+
+## Upload Storage and Serving
+
+- Never expose the uploads directory directly — serve files through a controlled `download.php`-style script
+- Direct requests to the uploads directory should return 403
+- Download script needs strict authorization (ownership checks to prevent IDOR) and path validation (allowlist only, no unsanitized input — to prevent LFI)
+- Serve downloads with security headers:
+    - `Content-Disposition: attachment` — forces download instead of inline render
+    - `Content-Type: <correct MIME>` — set explicitly
+    - `X-Content-Type-Options: nosniff` — blocks browser MIME sniffing
+- Randomize stored filenames; keep the original name in a database, resolved only at download time. This also neutralizes filename-injection attacks.
+- Isolate uploads on a separate server/container so RCE there doesn't compromise the main backend
+- Use `open_basedir` (PHP) to restrict filesystem access
+
+## Further Hardening
+
+- Disable dangerous PHP functions via `disable_functions` in `php.ini` (`exec`, `shell_exec`, `system`, `passthru`, `proc_open`, `popen`)
+- Suppress detailed error messages — show generic responses, never leak filenames, paths, or raw errors
+- Limit file size to prevent disk-fill DoS
+- Keep libraries (ImageMagick, ffmpeg, graphics processors) patched — they have a history of parser bugs
+- Scan uploads for malware if the use case tolerates the latency
+- Add a WAF as a secondary layer (not primary — WAFs are bypassable)

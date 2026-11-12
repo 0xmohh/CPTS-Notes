@@ -1,0 +1,66 @@
+---
+title: Whitelist Filter Bypass
+---
+
+Whitelists are stronger than blacklists — the app explicitly lists allowed extensions and rejects everything else. But they still break when the developer writes imprecise regex or when the application's filter disagrees with the web server's handler configuration.
+
+## Unanchored Regex — Double Extension
+
+If the regex lacks a trailing `$`, it only checks that an allowed extension appears somewhere in the name:
+
+```php
+if (!preg_match('^.*\.(jpg|jpeg|png|gif)', $fileName)) {
+    echo "Only images are allowed";
+    die();
+}
+```
+
+This matches *anywhere* in the filename. Upload:
+
+```
+shell.jpg.php
+```
+
+The name contains `.jpg`, so it passes the check. The file ends in `.php`, so the server executes it as PHP.
+
+## Anchored Regex — Reverse Double Extension
+
+If the regex uses `$` to anchor at the end, the filename must *end* with an allowed extension:
+
+```php
+if (!preg_match('/^.*\.(jpg|jpeg|png|gif)$/', $fileName)) { ... }
+```
+
+Now `shell.jpg.php` fails. But many Apache installations have handler rules like:
+
+```xml
+<FilesMatch ".+\.ph(ar|p|tml)">
+    SetHandler application/x-httpd-php
+</FilesMatch>
+```
+
+This handler matches any file whose name *contains* `.php`, `.phar`, or `.phtml` — anywhere, because the regex isn't anchored with `$`. Upload:
+
+```
+shell.php.jpg
+```
+
+- Ends in `.jpg` → passes the upload filter
+- Contains `.php` → triggers the PHP handler → executes as PHP
+
+> [!note] The root cause
+> The upload filter does a suffix check (`$`-anchored) while the handler does a substring check (no `$`). Two filters, each correct in isolation, combine into a hole.
+
+## Methodology
+
+1. **Identify the legitimate extension** for the upload form (usually from the UI or error messages)
+2. **Fuzz which PHP-executable extensions are configured on the server** — the same technique from the blacklist bypass works here, just applied to the handler side
+3. **Construct a name that satisfies both filters:**
+   - If the whitelist is unanchored: `shell.<allowed>.<php-ext>`
+   - If the whitelist is anchored: `shell.<php-ext>.<allowed>`
+
+## Fix (what good defenders do)
+
+- Anchor both regexes with `$`
+- Don't rely on filenames alone for execution decisions
+- Pair whitelist (primary) with blacklist (backstop against `shell.php.jpg`)

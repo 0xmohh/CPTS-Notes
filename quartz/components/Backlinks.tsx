@@ -5,6 +5,9 @@ import { i18n } from "../i18n"
 import { classNames } from "../util/lang"
 import OverflowListFactory from "./OverflowList"
 
+// @ts-ignore
+import script from "./scripts/backlinks.inline"
+
 interface BacklinksOptions {
   hideWhenEmpty: boolean
 }
@@ -30,26 +33,48 @@ export default ((opts?: Partial<BacklinksOptions>) => {
     }
     return (
       <div class={classNames(displayClass, "backlinks")}>
-        <h3>{i18n(cfg.locale).components.backlinks.title}</h3>
-        <OverflowList>
-          {backlinkFiles.length > 0 ? (
-            backlinkFiles.map((f) => (
-              <li>
-                <a href={resolveRelative(fileData.slug!, f.slug!)} class="internal">
-                  {f.frontmatter?.title}
-                </a>
-              </li>
-            ))
-          ) : (
-            <li>{i18n(cfg.locale).components.backlinks.noBacklinksFound}</li>
-          )}
-        </OverflowList>
+        <button
+          type="button"
+          class="backlinks-header"
+          aria-expanded="true"
+        >
+          <h3>{i18n(cfg.locale).components.backlinks.title}</h3>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="fold"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <div class="backlinks-content">
+          <OverflowList>
+            {backlinkFiles.length > 0 ? (
+              backlinkFiles.map((f) => (
+                <li>
+                  <a href={resolveRelative(fileData.slug!, f.slug!)} class="internal">
+                    {f.frontmatter?.title}
+                  </a>
+                </li>
+              ))
+            ) : (
+              <li>{i18n(cfg.locale).components.backlinks.noBacklinksFound}</li>
+            )}
+          </OverflowList>
+        </div>
       </div>
     )
   }
 
   Backlinks.css = style
-  Backlinks.afterDOMLoaded = overflowListAfterDOMLoaded
+  Backlinks.afterDOMLoaded = script + overflowListAfterDOMLoaded
 
   return Backlinks
 }) satisfies QuartzComponentConstructor

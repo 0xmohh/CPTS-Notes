@@ -11,7 +11,7 @@ title: Modules
 </style>
 
 > [!tip] How this works
-> Each module page has three tabs — **Notes** (humanized explanations), **Cheatsheet** (commands & payloads), and **Checklist** (methodology steps). Checklist progress is saved in your browser.
+> Each module folder contains a page per section (detailed notes) plus a **Cheatsheet & Checklist** page with tabs for quick reference during the exam. Checklist progress is saved in your browser.
 
 <div class="mod-grid">
 

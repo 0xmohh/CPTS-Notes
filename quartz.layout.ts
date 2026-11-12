@@ -8,15 +8,7 @@ const explorerConfig = {
   mapFn: (node: { isFolder: boolean; displayName: string }) => {
     const labels: Record<string, string> = {
       Whoami: "01 · Whoami",
-      Methodology: "02 · Methodology",
-      "Network Services": "🌐 Network Services",
-      "Password Attacks": "🔑 Password Attacks",
-      "Post-Exploitation": "💀 Post-Exploitation",
-      PrivEsc: "⬆ PrivEsc",
-      Metasploit: "🛠 Metasploit",
-      Writeups: "03 · Writeups",
-      HTB: "🟢 HackTheBox",
-      THM: "🔴 TryHackMe",
+      modules: "02 · Modules",
     }
     if (labels[node.displayName]) {
       node.displayName = labels[node.displayName]

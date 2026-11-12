@@ -1,3 +1,477 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+// ═══════════════════════════════════════════════════════
+// AnuPpuccin-inspired Theme — Catppuccin palette
+// ═══════════════════════════════════════════════════════
+
+// ─── Catppuccin palette tokens (dark = Mocha, light = Latte) ───
+:root {
+  --cat-rosewater: #f5e0dc;
+  --cat-flamingo:  #f2cdcd;
+  --cat-pink:      #f5c2e7;
+  --cat-mauve:     #cba6f7;
+  --cat-red:       #f38ba8;
+  --cat-maroon:    #eba0ac;
+  --cat-peach:     #fab387;
+  --cat-yellow:    #f9e2af;
+  --cat-green:     #a6e3a1;
+  --cat-teal:      #94e2d5;
+  --cat-sky:       #89dceb;
+  --cat-sapphire:  #74c7ec;
+  --cat-blue:      #89b4fa;
+  --cat-lavender:  #b4befe;
+}
+
+[saved-theme="light"] {
+  --cat-red:     #d20f39;
+  --cat-peach:   #fe640b;
+  --cat-yellow:  #df8e1d;
+  --cat-green:   #40a02b;
+  --cat-teal:    #179299;
+  --cat-sky:     #04a5e5;
+  --cat-blue:    #1e66f5;
+  --cat-mauve:   #8839ef;
+  --cat-pink:    #ea76cb;
+  --cat-lavender: #7287fd;
+}
+
+// ─── Navigation Progress Bar ───────────────────────────
+.navigation-progress {
+  background: linear-gradient(90deg, var(--secondary) 0%, var(--tertiary) 100%);
+  height: 3px;
+  box-shadow: 0 0 10px var(--secondary);
+}
+
+// ─── Page Title (Sidebar) ──────────────────────────────
+.page-title a {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--secondary) !important;
+  background: none !important;
+  padding: 0 !important;
+  font-size: 1.2rem;
+}
+
+// ─── Article Title ─────────────────────────────────────
+h1.article-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid var(--secondary);
+  margin-bottom: 1.25rem;
+  color: var(--dark);
+}
+
+// ─── Content Headings ──────────────────────────────────
+article h2 {
+  color: var(--secondary) !important;
+  border-bottom: 1px solid var(--lightgray);
+  padding-bottom: 0.25rem;
+  margin-top: 2rem;
+
+  & > a[role="anchor"] { color: var(--secondary) !important; }
+}
+
+article h3 {
+  color: var(--tertiary) !important;
+
+  & > a[role="anchor"] { color: var(--tertiary) !important; }
+}
+
+// ─── Code Blocks ───────────────────────────────────────
+pre {
+  border-radius: 10px !important;
+  border: 1px solid var(--lightgray) !important;
+}
+
+figure[data-rehype-pretty-code-figure] > [data-rehype-pretty-code-title] {
+  background: var(--lightgray) !important;
+  border: 1px solid var(--lightgray) !important;
+  border-bottom: 2px solid var(--secondary) !important;
+  border-radius: 10px 10px 0 0 !important;
+  color: var(--secondary) !important;
+  font-weight: 600;
+  padding: 0.3rem 0.9rem !important;
+  width: auto !important;
+  margin-bottom: 0 !important;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+}
+
+code:not(pre code) {
+  color: var(--secondary);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  background: var(--highlight) !important;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.84em;
+}
+
+// ─── Tables ────────────────────────────────────────────
+.table-container {
+  border: 1px solid var(--lightgray);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 1.5rem 0;
+
+  & > table {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    border-collapse: collapse;
+  }
+}
+
+thead tr { background: var(--lightgray); }
+
+th {
+  color: var(--secondary) !important;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--headerFont);
+  padding: 0.55rem 1rem;
+  border-bottom: 2px solid var(--secondary) !important;
+}
+
+td {
+  padding: 0.35rem 1rem;
+  font-size: 0.9rem;
+}
+
+tr:nth-child(even) td { background: rgba(128, 128, 128, 0.04); }
+
+// ─── Blockquotes ───────────────────────────────────────
+blockquote {
+  border-left: 3px solid var(--tertiary) !important;
+  background: rgba(128, 128, 128, 0.06);
+  border-radius: 0 10px 10px 0;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+}
+
+// ─── Callouts — AnuPpuccin full-color style ─────────────
+.callout {
+  border-radius: 10px;
+  margin: 1.25rem 0;
+  border: none !important;
+  border-left: none !important;
+  overflow: hidden;
+
+  .callout-title {
+    font-family: var(--headerFont);
+    font-weight: 600;
+    font-size: 0.88rem;
+    letter-spacing: 0.03em;
+    padding: 0.5rem 0.85rem 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .callout-content {
+    padding: 0.1rem 0.85rem 0.75rem;
+
+    p {
+      margin: 0 0 0.5rem;
+      line-height: 1.75;
+
+      &:last-child { margin-bottom: 0; }
+    }
+  }
+
+  // Note / info
+  &[data-callout="note"],
+  &[data-callout="info"] {
+    background: rgba(137, 180, 250, 0.12);
+
+    .callout-title { color: var(--cat-blue) !important; }
+    .callout-icon svg, .callout-title-inner { color: var(--cat-blue) !important; }
+  }
+
+  // Tip / hint
+  &[data-callout="tip"],
+  &[data-callout="hint"] {
+    background: rgba(148, 226, 213, 0.12);
+
+    .callout-title { color: var(--cat-teal) !important; }
+    .callout-icon svg, .callout-title-inner { color: var(--cat-teal) !important; }
+  }
+
+  // Success / check
+  &[data-callout="success"],
+  &[data-callout="check"],
+  &[data-callout="done"] {
+    background: rgba(166, 227, 161, 0.12);
+
+    .callout-title { color: var(--cat-green) !important; }
+    .callout-icon svg, .callout-title-inner { color: var(--cat-green) !important; }
+  }
+
+  // Warning / caution — orange, NOT yellow
+  &[data-callout="warning"],
+  &[data-callout="caution"],
+  &[data-callout="attention"] {
+    background: rgba(250, 179, 135, 0.12);
+
+    .callout-title { color: var(--cat-peach) !important; }
+    .callout-icon svg, .callout-title-inner { color: var(--cat-peach) !important; }
+  }
+
+  // Danger / error / bug — red, NO yellow
+  &[data-callout="danger"],
+  &[data-callout="error"],
+  &[data-callout="bug"],
+  &[data-callout="failure"],
+  &[data-callout="fail"],
+  &[data-callout="missing"] {
+    background: rgba(243, 139, 168, 0.12);
+
+    .callout-title { color: var(--cat-red) !important; }
+    .callout-icon svg, .callout-title-inner { color: var(--cat-red) !important; }
+  }
+
+  // Question / faq
+  &[data-callout="question"],
+  &[data-callout="faq"],
+  &[data-callout="help"] {
+    background: rgba(137, 220, 235, 0.12);
+
+    .callout-title { color: var(--cat-sky) !important; }
+    .callout-icon svg, .callout-title-inner { color: var(--cat-sky) !important; }
+  }
+
+  // Quote / cite
+  &[data-callout="quote"],
+  &[data-callout="cite"] {
+    background: rgba(108, 112, 134, 0.08);
+
+    .callout-title { color: var(--gray) !important; }
+    .callout-icon svg, .callout-title-inner { color: var(--gray) !important; }
+  }
+
+  // Abstract / summary / tldr
+  &[data-callout="abstract"],
+  &[data-callout="summary"],
+  &[data-callout="tldr"] {
+    background: rgba(203, 166, 247, 0.12);
+
+    .callout-title { color: var(--cat-mauve) !important; }
+    .callout-icon svg, .callout-title-inner { color: var(--cat-mauve) !important; }
+  }
+
+  // Example
+  &[data-callout="example"] {
+    background: rgba(180, 190, 254, 0.12);
+
+    .callout-title { color: var(--cat-lavender) !important; }
+    .callout-icon svg, .callout-title-inner { color: var(--cat-lavender) !important; }
+  }
+}
+
+// ─── Tags ──────────────────────────────────────────────
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.4rem 0 0.8rem;
+}
+
+a.internal.tag-link {
+  border-radius: 999px !important;
+  font-size: 0.72rem !important;
+  padding: 0.15rem 0.7rem !important;
+  line-height: 1.4 !important;
+  border: 1px solid var(--secondary) !important;
+  background: transparent !important;
+  color: var(--secondary) !important;
+  font-weight: 500 !important;
+  transition: background 0.18s ease, color 0.18s ease;
+
+  &:hover {
+    background: var(--secondary) !important;
+    color: var(--light) !important;
+  }
+}
+
+// ─── Internal Links ────────────────────────────────────
+a.internal {
+  border-radius: 4px;
+  padding: 0.05rem 0.2rem;
+  transition: background 0.15s ease;
+}
+
+// ─── Sidebar ───────────────────────────────────────────
+.sidebar.left {
+  border-right: 1px solid var(--lightgray);
+}
+
+// ─── Search ────────────────────────────────────────────
+.search input {
+  border-radius: 8px !important;
+  border: 1px solid var(--lightgray) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: var(--bodyFont);
+
+  &:focus {
+    border-color: var(--secondary) !important;
+    box-shadow: 0 0 0 3px var(--highlight) !important;
+    outline: none !important;
+  }
+}
+
+// ─── Explorer ──────────────────────────────────────────
+.explorer {
+  // Folder toggle buttons
+  button.folder-button {
+    border-radius: 6px;
+    transition: color 0.15s ease, background 0.15s ease;
+    font-family: var(--headerFont);
+    font-weight: 600;
+    font-size: 0.85rem;
+
+    &:hover {
+      color: var(--secondary) !important;
+      background: var(--highlight);
+    }
+  }
+
+  // File links
+  a.folder-title {
+    border-radius: 6px;
+    font-weight: 600;
+    transition: color 0.15s ease;
+
+    &:hover { color: var(--secondary) !important; }
+  }
+
+  li.active > a {
+    color: var(--secondary) !important;
+    font-weight: 700;
+    background: var(--highlight);
+    border-radius: 6px;
+  }
+
+  // Folder icon color accent
+  svg.folder-icon { color: var(--secondary); }
+}
+
+// ─── Table of Contents (inline, before body) ───────────
+.toc {
+  background: var(--lightgray);
+  border: 1px solid var(--lightgray);
+  border-left: 3px solid var(--secondary);
+  border-radius: 10px;
+  padding: 0.6rem 1rem 0.75rem;
+  margin-bottom: 1.5rem;
+
+  #toc-content {
+    a {
+      font-size: 0.83rem;
+      color: var(--darkgray);
+      transition: color 0.15s ease;
+      text-decoration: none;
+
+      &:hover { color: var(--secondary); }
+    }
+
+    li.in-view > a {
+      color: var(--secondary);
+      font-weight: 600;
+    }
+  }
+}
+
+// ─── Backlinks ─────────────────────────────────────────
+.backlinks {
+  border: 1px solid var(--lightgray);
+  border-radius: 10px;
+  padding: 0.75rem 1rem !important;
+  background: var(--lightgray);
+
+  h3 {
+    color: var(--secondary) !important;
+    font-size: 0.78rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-top: 0 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+}
+
+// ─── Graph ─────────────────────────────────────────────
+#graph-container {
+  border: 1px solid var(--lightgray);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+// ─── Breadcrumbs ───────────────────────────────────────
+.breadcrumb-container {
+  font-size: 0.78rem;
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+
+  a {
+    color: var(--gray) !important;
+    font-weight: 400 !important;
+    background: none !important;
+    padding: 0 !important;
+
+    &:hover { color: var(--secondary) !important; }
+  }
+
+  .breadcrumb-element:last-child a {
+    color: var(--secondary) !important;
+    font-weight: 600 !important;
+  }
+}
+
+// ─── Content Meta ──────────────────────────────────────
+.content-meta {
+  font-size: 0.78rem;
+  color: var(--gray);
+  border-bottom: 1px solid var(--lightgray);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+// ─── HR dividers ───────────────────────────────────────
+article hr {
+  background: linear-gradient(90deg, transparent, var(--secondary), transparent) !important;
+  height: 1px !important;
+  opacity: 0.3;
+  border: none;
+  margin: 1.75rem 0;
+}
+
+// ─── Footer ────────────────────────────────────────────
+footer {
+  border-top: 1px solid var(--lightgray) !important;
+  margin-top: 2rem !important;
+  padding-top: 1rem !important;
+  font-size: 0.82rem;
+  color: var(--gray);
+
+  a {
+    color: var(--secondary) !important;
+    background: none !important;
+    padding: 0 !important;
+    font-weight: 500;
+
+    &:hover { color: var(--tertiary) !important; }
+  }
+}
+
+// ─── Darkmode toggle ───────────────────────────────────
+.darkmode svg {
+  transition: color 0.2s ease;
+  &:hover { color: var(--secondary) !important; }
+}

@@ -1,0 +1,50 @@
+---
+title: Client-Side Validation
+---
+
+Many web applications rely on front-end JavaScript to validate uploads before they reach the server. This is trivial to bypass — the validation runs on your browser, which you fully control.
+
+## How to Spot Client-Side-Only Filters
+
+Two signs a filter is client-side only:
+
+- Selecting a disallowed file shows an error without any HTTP request going to the server
+- The validation logic is visible in the page's JavaScript (`checkFile()`, `validateUpload()`, etc.)
+
+If the file selection triggers no network traffic, the browser rejected it locally — and anything the browser enforces, you can disable.
+
+## Bypass Method 1 — Modify the Request Directly
+
+Upload any allowed file (e.g. `cat.png`), capture the request in Burp, and edit it:
+
+1. Change `filename="cat.png"` to `filename="shell.php"` in the multipart section
+2. Replace the image body with your PHP payload
+3. Forward the request
+
+The server never sees the JavaScript filter.
+
+## Bypass Method 2 — Disable the Validation in the Browser
+
+Another option is to delete the validation function entirely before uploading. Because it runs in your browser, you own it.
+
+1. Open DevTools (`CTRL+SHIFT+I`), right-click the file input, Inspect
+2. Find the `onchange` or `oninput` handler — usually calls something like `checkFile()`
+3. Open the Console, type the function name to inspect it:
+
+```javascript
+function checkFile(File) {
+    if (extension !== 'jpg' && extension !== 'jpeg' && extension !== 'png') {
+        $('#error_message').text("Only images are allowed!");
+        File.form.reset();
+        $("#submit").attr("disabled", true);
+    }
+}
+```
+
+4. In the DevTools Sources panel or via the Elements inspector, delete the function or remove the `onchange` attribute from the input tag
+
+> [!warning] Remove only the validation
+> Deleting too much can break the form so no file uploads at all. Only remove the specific validation function — not the whole handler, not the submit logic.
+
+> [!tip] Test with an allowed file first
+> After disabling the filter, upload a known-good image to confirm the form still works. Then try your payload.

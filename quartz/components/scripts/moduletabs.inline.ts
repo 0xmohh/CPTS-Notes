@@ -1,4 +1,4 @@
-const TAB_NAMES = ["Notes", "Cheatsheet", "Checklist"] as const
+const TAB_NAMES = ["Cheatsheet", "Checklist"] as const
 type TabName = (typeof TAB_NAMES)[number]
 
 function getH2Label(h2: HTMLHeadingElement): string {
