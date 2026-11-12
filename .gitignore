@@ -9,3 +9,10 @@ tsconfig.tsbuildinfo
 private/
 .replit
 replit.nix
+
+# Internal scratch — don't publish
+.claude/
+.superpowers/
+.playwright-mcp/
+*.log
+content/.playwright-mcp/
