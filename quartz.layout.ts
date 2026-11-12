@@ -1,15 +1,41 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
 
+const explorerConfig = {
+  folderDefaultState: "collapsed" as const,
+  useSavedState: true,
+  // map runs before sort (default order: filter → map → sort)
+  mapFn: (node: { isFolder: boolean; displayName: string }) => {
+    const labels: Record<string, string> = {
+      Whoami: "01 · Whoami",
+      Methodology: "02 · Methodology",
+      "Network Services": "🌐 Network Services",
+      "Password Attacks": "🔑 Password Attacks",
+      "Post-Exploitation": "💀 Post-Exploitation",
+      PrivEsc: "⬆ PrivEsc",
+      Metasploit: "🛠 Metasploit",
+      Writeups: "03 · Writeups",
+      HTB: "🟢 HackTheBox",
+      THM: "🔴 TryHackMe",
+    }
+    if (labels[node.displayName]) {
+      node.displayName = labels[node.displayName]
+    }
+  },
+  sortFn: (a: { isFolder: boolean; displayName: string }, b: { isFolder: boolean; displayName: string }) => {
+    return a.displayName.localeCompare(b.displayName, undefined, { numeric: true })
+  },
+}
+
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
-  afterBody: [],
+  afterBody: [Component.ModuleTabs()],
   footer: Component.Footer({
     links: {
-      GitHub: "https://github.com/jackyzha0/quartz",
-      "Discord Community": "https://discord.gg/cRFFHYye7t",
+      "HTB Academy": "https://academy.hackthebox.com",
+      "CPTS Path": "https://academy.hackthebox.com/preview/certifications/htb-certified-penetration-testing-specialist",
     },
   }),
 }
@@ -28,26 +54,17 @@ export const defaultContentPageLayout: PageLayout = {
   left: [
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
-    Component.Flex({
-      components: [
-        {
-          Component: Component.Search(),
-          grow: true,
-        },
-        { Component: Component.Darkmode() },
-        { Component: Component.ReaderMode() },
-      ],
-    }),
-    Component.Explorer(),
+    Component.Search(),
+    Component.Darkmode(),
+    Component.Explorer(explorerConfig),
   ],
   right: [
     Component.Graph(),
     Component.DesktopOnly(Component.TableOfContents()),
-    Component.Backlinks(),
   ],
 }
 
-// components for pages that display lists of pages  (e.g. tags or folders)
+// components for pages that display lists of pages (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
   left: [
@@ -62,7 +79,7 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer(explorerConfig),
   ],
   right: [],
 }

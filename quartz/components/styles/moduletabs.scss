@@ -1,0 +1,79 @@
+.module-tabs-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0 0;
+  border-bottom: 2px solid var(--lightgray);
+  padding-bottom: 0;
+  flex-wrap: wrap;
+}
+
+.module-tab-btn {
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  background: transparent;
+  color: var(--darkgray);
+  font-size: 0.95rem;
+  font-family: var(--bodyFont);
+  cursor: pointer;
+  border-radius: 6px 6px 0 0;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+
+  &:hover {
+    color: var(--dark);
+    background: var(--lightgray);
+  }
+
+  &.active {
+    color: #00ff9f;
+    border-bottom: 2px solid #00ff9f;
+    background: transparent;
+    font-weight: 600;
+  }
+}
+
+.module-tab-panel {
+  display: none;
+  padding-top: 1rem;
+
+  &.active {
+    display: block;
+  }
+}
+
+.module-card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0.75rem 0 1.5rem 0;
+}
+
+.module-card {
+  padding: 0.4rem 0.9rem;
+  background: var(--lightgray);
+  border: 1px solid var(--gray);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--darkgray);
+  transition: all 0.15s ease;
+  text-align: left;
+  font-family: var(--bodyFont);
+
+  &:hover {
+    border-color: #00ff9f;
+    color: var(--dark);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 255, 159, 0.15);
+  }
+}
+
+.module-tab-panel[data-tab="checklist"] {
+  li:has(input[type="checkbox"].checkbox-toggle:checked) {
+    text-decoration: line-through;
+    opacity: 0.55;
+  }
+}
