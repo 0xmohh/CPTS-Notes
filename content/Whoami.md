@@ -2,8 +2,6 @@
 title: "01 · Whoami"
 ---
 
-> *"The quieter you become, the more you are able to hear."* — Kali Linux
-
 ## About Me
 
 I'm a cybersecurity enthusiast currently on the path to earning the **HackTheBox Certified Penetration Testing Specialist (CPTS)** certification.
