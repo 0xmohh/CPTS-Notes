@@ -1,5 +1,5 @@
 ---
-title: SQL Injection
+title: 07 · SQL Injection
 ---
 
 SQL Injection happens when user input ends up inside a SQL query without proper sanitization. It's one of the oldest and most dangerous web vulnerabilities — a successful SQLi can extract entire databases, bypass authentication, read files on the server, and sometimes achieve RCE.

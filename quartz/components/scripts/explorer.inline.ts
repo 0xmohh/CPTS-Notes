@@ -259,6 +259,45 @@ async function setupExplorer(currentSlug: FullSlug) {
       icon.addEventListener("click", toggleFolder)
       window.addCleanup(() => icon.removeEventListener("click", toggleFolder))
     }
+
+    const setAllFolders = (collapsed: boolean) => {
+      const folderContainers = explorer.querySelectorAll(
+        ".folder-container",
+      ) as NodeListOf<HTMLElement>
+      for (const fc of folderContainers) {
+        const outer = fc.nextElementSibling as MaybeHTMLElement
+        if (!outer) continue
+        setFolderState(outer, collapsed)
+        const path = fc.dataset.folderpath
+        if (!path) continue
+        const existing = currentExplorerState.find((item) => item.path === path)
+        if (existing) {
+          existing.collapsed = collapsed
+        } else {
+          currentExplorerState.push({ path, collapsed })
+        }
+      }
+      localStorage.setItem("fileTree", JSON.stringify(currentExplorerState))
+    }
+
+    const expandAllBtn = explorer.querySelector(".explorer-expand-all") as MaybeHTMLElement
+    const collapseAllBtn = explorer.querySelector(".explorer-collapse-all") as MaybeHTMLElement
+    const onExpandAll = (e: Event) => {
+      e.stopPropagation()
+      setAllFolders(false)
+    }
+    const onCollapseAll = (e: Event) => {
+      e.stopPropagation()
+      setAllFolders(true)
+    }
+    if (expandAllBtn) {
+      expandAllBtn.addEventListener("click", onExpandAll)
+      window.addCleanup(() => expandAllBtn.removeEventListener("click", onExpandAll))
+    }
+    if (collapseAllBtn) {
+      collapseAllBtn.addEventListener("click", onCollapseAll)
+      window.addCleanup(() => collapseAllBtn.removeEventListener("click", onCollapseAll))
+    }
   }
 }
 
