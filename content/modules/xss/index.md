@@ -1,5 +1,5 @@
 ---
-title: XSS
+title: 10 · XSS
 ---
 
 Cross-Site Scripting (XSS) happens when attacker-controlled JavaScript runs in the victim's browser. The three variants differ in *where* the payload enters the flow — but the end result is always the same: arbitrary JS in a trusted origin, which lets you read cookies, hijack sessions, exfiltrate data, and impersonate users.

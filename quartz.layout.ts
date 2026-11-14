@@ -3,6 +3,7 @@ import * as Component from "./quartz/components"
 
 const explorerConfig = {
   folderDefaultState: "collapsed" as const,
+  folderClickBehavior: "collapse" as const,
   useSavedState: true,
   // map runs before sort (default order: filter → map → sort)
   mapFn: (node: { isFolder: boolean; displayName: string }) => {

@@ -16,7 +16,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "en-US",
-    baseUrl: "0xmohh.github.io/Pentest-Notes",
+    baseUrl: "0xmohh.github.io/CPTS-Notes-",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "modified",
     theme: {

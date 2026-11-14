@@ -1,5 +1,5 @@
 ---
-title: File Upload Attacks
+title: 12 · File Upload Attacks
 ---
 
 File upload functionality is a frequent source of high-impact bugs. If you can get an executable file onto a web server and reach it via URL, you own that server. This module covers how to defeat each layer defenders stack on top of upload forms — and what to do when the file type is locked down but the format itself is dangerous.

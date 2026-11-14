@@ -1,5 +1,5 @@
 ---
-title: File Inclusion
+title: 06 · File Inclusion
 ---
 
 File Inclusion vulnerabilities happen when a web app builds a file path from unsanitized user input and passes it to an inclusion function. **Local File Inclusion (LFI)** reads (or executes) files on the server; **Remote File Inclusion (RFI)** includes files from an attacker-controlled URL. The two can combine into full RCE.
