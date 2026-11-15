@@ -1,5 +1,5 @@
 ---
-title: 13 · File Transfer
+title: 03 · File Transfer
 ---
 
 Getting your tools onto the target and getting loot off of it is one of the most practical skills in offensive security. Defenders block the easy paths — outbound HTTP, FTP, SMB — and expect you to give up. This module covers every realistic way to move bytes across a boundary: native OS utilities, scripting languages that happen to be installed, protocols that aren't locked down yet, and techniques for the moments when every one of those fails.

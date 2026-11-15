@@ -1,5 +1,5 @@
 ---
-title: 16 · Active Directory Enumeration & Attacks
+title: 19 · Active Directory Enumeration & Attacks
 ---
 
 Active Directory is the most common identity backbone in enterprise environments — and the richest attack surface. Any domain user can enumerate most objects by design, which means the gap between "foothold" and "Domain Admin" is usually paved with misconfigurations, weak service-account passwords, and legacy protocols defenders forgot about. This module is the operator's reference: commands, payloads, and short explanations of when each attack applies.

@@ -1,5 +1,5 @@
 ---
-title: 09 · Command Injection
+title: 13 · Command Injection
 ---
 
 Command Injection happens when a web application passes user input to a system shell without proper escaping. The simplest high-impact web vulnerability — successful injection gives you arbitrary command execution as whatever user the web server runs as.

@@ -1,5 +1,5 @@
 ---
-title: 14 · Shells & Payloads
+title: 04 · Shells & Payloads
 ---
 
 Getting code execution is only half the job — you still need a shell that survives, lets you type, and doesn't get killed by Defender in the first five seconds. This module covers the payload matrix: what shell to drop on what platform, how to catch it, how to upgrade it into something usable, and what defenders see when you do.

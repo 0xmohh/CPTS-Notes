@@ -1,5 +1,5 @@
 ---
-title: 05 · Attacking Web Applications with Ffuf
+title: 06 · Attacking Web Applications with Ffuf
 ---
 
 Ffuf is the web fuzzer you reach for when you need to brute-force anything that varies in a request — paths, extensions, parameter names, parameter values, subdomains, virtual hosts, headers. Point it at a URL, drop the `FUZZ` keyword where you want iteration to happen, feed it a wordlist, and read the output. This module covers how to drive ffuf effectively against real targets: picking the right wordlists, filtering out noise, chaining recursion, and layering fuzz positions to find hidden attack surface.

@@ -1,5 +1,5 @@
 ---
-title: 03 · Login Brute Forcing
+title: 07 · Login Brute Forcing
 ---
 
 Login brute forcing is the brute end of credential attacks — throwing wordlists at authentication endpoints until something sticks. It's noisy, slow, and often rate-limited, but when valid credentials exist in a leak or a weak policy is in place, it's the fastest path from unauthenticated to a shell. This module covers wordlist generation, the two workhorse tools (Hydra and Medusa), and the per-service quirks that trip people up.

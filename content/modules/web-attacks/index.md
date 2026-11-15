@@ -1,5 +1,5 @@
 ---
-title: 11 · Web Attacks
+title: 14 · Web Attacks
 ---
 
 A grab-bag of high-impact web vulnerabilities that don't fit cleanly into the injection-family modules. These attacks exploit misconfigurations and logic flaws in HTTP handling, authorization, and XML parsing — often appearing in applications that look otherwise well-protected.

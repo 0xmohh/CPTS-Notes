@@ -1,5 +1,5 @@
 ---
-title: 01 · Information Gathering
+title: 02 · Information Gathering
 ---
 
 Web-focused reconnaissance — building a picture of a target web application before touching anything that generates alerts. Overlaps with Footprinting but focuses specifically on web-layer intel: WHOIS, subdomains, technology fingerprinting, crawling, and the special metadata endpoints apps expose for machines.

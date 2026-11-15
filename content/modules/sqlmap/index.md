@@ -1,5 +1,5 @@
 ---
-title: 08 · Using SQLMap
+title: 09 · Using SQLMap
 ---
 
 SQLMap is the detection-and-exploitation workhorse for SQL injection. Point it at a parameter, let it fingerprint, then ride its boundary/payload engine from a single quote all the way to an OS shell. This module covers how to feed it real-world requests, tune its noise, beat WAFs with tamper scripts, and escalate a confirmed SQLi into a file read, file write, or `--os-shell`.

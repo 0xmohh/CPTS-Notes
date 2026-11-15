@@ -1,5 +1,5 @@
 ---
-title: 02 · Footprinting
+title: 01 · Footprinting
 ---
 
 Footprinting is the systematic enumeration of a target's infrastructure, services, and exposure. The principle: enumeration is the key — finding every path to a target matters more than exploiting the first vulnerability you see.

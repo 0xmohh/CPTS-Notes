@@ -1,5 +1,5 @@
 ---
-title: 04 · Using Web Proxies
+title: 05 · Using Web Proxies
 ---
 
 Burp Suite and OWASP ZAP are the two intercepting proxies every web pentester lives inside. They let you pause requests mid-flight, rewrite anything on the wire, replay with modifications, fuzz parameters at scale, and run passive/active vulnerability scans. This module covers the operator workflow — setup, intercept, repeat, fuzz, scan — in both tools so you can switch between them based on what the engagement demands.
