@@ -28,7 +28,7 @@ PageTitle.css = `
   width: 100%;
   max-width: 100%;
   height: auto;
-  max-height: 70px;
+  max-height: 120px;
   object-fit: contain;
   border-radius: 4px;
 }
